@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faxina</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="app">
+  <aside class="lateral">
+    <div class="marca">
+      <span class="logo" data-icone="logo"></span>
+      <div>
+        <strong>Faxina</strong>
+        <small>limpeza sem susto</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <button class="menu-item ativo" data-tela="limpeza"><span data-icone="vassoura"></span>Limpeza</button>
+      <button class="menu-item" data-tela="agenda"><span data-icone="calendario"></span>Agendamento</button>
+      <button class="menu-item" data-tela="historico"><span data-icone="historico"></span>Histórico</button>
+    </nav>
+
+    <div class="discos" id="discos"></div>
+
+    <div class="admin" id="admin"></div>
+  </aside>
+
+  <main class="principal">
+    <!-- ======================= LIMPEZA ======================= -->
+    <section class="tela ativa" id="tela-limpeza">
+
+      <div class="estado" id="estado-inicio">
+        <div class="heroi">
+          <div class="heroi-arte" aria-hidden="true">
+            <div class="bolha b1"></div><div class="bolha b2"></div><div class="bolha b3"></div>
+            <span class="heroi-icone" data-icone="brilho"></span>
+          </div>
+          <h1>Vamos dar uma geral no seu PC?</h1>
+          <p class="sub">A Faxina olha caches, temporários e instaladores esquecidos.
+            Nada sai sem você ver antes.</p>
+          <button class="botao primario grande" id="analisar">
+            <span data-icone="lupa"></span>Analisar agora
+          </button>
+          <div class="fatos" id="fatos"></div>
+        </div>
+      </div>
+
+      <div class="estado" id="estado-trabalhando" hidden>
+        <div class="heroi">
+          <div class="anel" id="anel">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="anel-fundo" cx="60" cy="60" r="52"/>
+              <circle class="anel-frente" id="anel-frente" cx="60" cy="60" r="52"/>
+            </svg>
+            <span class="anel-numero" id="anel-numero">0%</span>
+          </div>
+          <h2 id="trabalhando-titulo">Analisando…</h2>
+          <p class="sub" id="trabalhando-detalhe">&nbsp;</p>
+        </div>
+      </div>
+
+      <div class="estado" id="estado-resultado" hidden>
+        <header class="resumo">
+          <div>
+            <p class="rotulo">Dá para liberar</p>
+            <p class="numero-grande" id="total-encontrado">0 GB</p>
+            <div class="barra-grupos" id="barra-grupos"></div>
+            <div class="legenda" id="legenda"></div>
+          </div>
+          <button class="botao fantasma" id="reanalisar"><span data-icone="refazer"></span>Analisar de novo</button>
+        </header>
+        <div id="aviso-admin"></div>
+        <div id="grupos"></div>
+        <div class="ja-limpo" id="ja-limpo"></div>
+        <div class="espaco-barra"></div>
+        <footer class="barra-acao">
+          <div>
+            <strong id="selecionado">0 GB</strong>
+            <span id="selecionado-detalhe">selecionados</span>
+          </div>
+          <button class="botao primario" id="limpar"><span data-icone="vassoura"></span>Limpar agora</button>
+        </footer>
+      </div>
+
+      <div class="estado" id="estado-pronto" hidden>
+        <div class="heroi">
+          <div class="confete" id="confete" aria-hidden="true"></div>
+          <span class="selo-ok" data-icone="ok"></span>
+          <p class="numero-gigante" id="liberado">0 GB</p>
+          <p class="rotulo-gigante">liberados</p>
+          <p class="sub" id="pronto-detalhe"></p>
+          <div class="cartao lista-final" id="lista-final"></div>
+          <div class="botoes">
+            <button class="botao primario" id="de-novo"><span data-icone="refazer"></span>Analisar de novo</button>
+            <button class="botao fantasma" data-ir="historico"><span data-icone="historico"></span>Ver histórico</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= AGENDA ======================= -->
+    <section class="tela" id="tela-agenda">
+      <h1 class="titulo-tela">Agendamento</h1>
+      <p class="sub-tela">A Faxina pode olhar o disco sozinha e te chamar quando valer a pena.</p>
+
+      <div class="cartao linha-chave">
+        <div>
+          <strong>Faxina automática</strong>
+          <p class="mudo" id="agenda-status">Desligada</p>
+        </div>
+        <label class="chave">
+          <input type="checkbox" id="ag-ativo">
+          <span></span>
+        </label>
+      </div>
+
+      <div class="agenda-campos" id="agenda-campos">
+        <div class="cartao">
+          <p class="rotulo-campo">Com que frequência</p>
+          <div class="segmentado" id="ag-frequencia">
+            <button data-valor="semanal">Toda semana</button>
+            <button data-valor="mensal">Todo mês</button>
+          </div>
+
+          <div class="campos-linha">
+            <div id="campo-semana">
+              <p class="rotulo-campo">Dia da semana</p>
+              <div class="dias" id="ag-dia-semana"></div>
+            </div>
+            <div id="campo-mes">
+              <p class="rotulo-campo">Dia do mês</p>
+              <select id="ag-dia-mes"></select>
+            </div>
+            <div>
+              <p class="rotulo-campo">Hora</p>
+              <input type="time" id="ag-hora">
+            </div>
+          </div>
+          <p class="dica"><span data-icone="info"></span>Se o PC estiver desligado nessa hora, a Faxina roda assim que ele ligar.</p>
+        </div>
+
+        <div class="cartao">
+          <p class="rotulo-campo">O que fazer</p>
+          <div class="opcoes" id="ag-modo">
+            <button class="opcao" data-valor="avisar">
+              <span class="opcao-icone" data-icone="sino"></span>
+              <span>
+                <strong>Só me avisar</strong>
+                <small>Analisa e manda uma notificação. Você abre e decide o que sai.</small>
+              </span>
+            </button>
+            <button class="opcao" data-valor="limpar">
+              <span class="opcao-icone" data-icone="vassoura"></span>
+              <span>
+                <strong>Limpar o que é seguro e me avisar</strong>
+                <small>Apaga caches e temporários sozinha. Instaladores, lixeira e músicas offline nunca saem sem você.</small>
+              </span>
+            </button>
+          </div>
+
+          <div class="limite">
+            <label for="ag-limite">Avisar só se der para liberar pelo menos</label>
+            <div class="limite-valor">
+              <input type="range" id="ag-limite" min="0.5" max="20" step="0.5">
+              <output id="ag-limite-valor">1 GB</output>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-rodape">
+        <p class="proxima" id="ag-proxima"></p>
+        <div class="botoes">
+          <button class="botao fantasma" id="ag-testar"><span data-icone="sino"></span>Testar a notificação</button>
+          <button class="botao primario" id="ag-salvar"><span data-icone="ok"></span>Salvar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= HISTÓRICO ======================= -->
+    <section class="tela" id="tela-historico">
+      <h1 class="titulo-tela">Histórico</h1>
+      <p class="sub-tela">Tudo o que a Faxina já liberou neste PC.</p>
+      <div class="numeros" id="hist-numeros"></div>
+      <div class="cartao" id="hist-lista"></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <h2 id="modal-titulo">Antes de limpar</h2>
+    <div id="modal-corpo"></div>
+    <div class="botoes">
+      <button class="botao fantasma" id="modal-cancelar">Voltar</button>
+      <button class="botao primario" id="modal-ok">Pode limpar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="icones.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

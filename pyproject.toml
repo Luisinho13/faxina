@@ -1,0 +1,17 @@
+[project]
+name = "faxina"
+version = "0.1.0"
+description = "Limpeza de disco sem susto, para Windows"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pywebview>=5",
+    "send2trash>=1.8",
+    "winotify>=1.1",
+]
+
+[dependency-groups]
+dev = ["pytest", "pillow", "pyinstaller"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["testes"]
