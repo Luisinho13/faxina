@@ -64,8 +64,14 @@ Pronto e testado: análise, limpeza (no rascunho), tela completa (claro e
 escuro), agendamento criado/conferido/removido no Agendador, rotina
 `--agendado` em modo avisar, notificação, `.exe` abrindo. **Nenhuma
 limpeza real foi feita pelo app**: o primeiro uso real é do usuário.
-Agendamento ficou **desligado**. Nada commitado (repositório criado, sem
-commit; o usuário não pediu).
+Agendamento ficou **desligado**.
+
+Repositório **público** em https://github.com/Luisinho13/faxina (pedido
+do usuário em 14/10), separado do estoque. O `gh` não está logado nesta
+máquina: o push funciona pelo login do Git no Windows, mas criar
+repositório novo é com o usuário (github.com/new) ou `gh auth login`.
+Sem arquivo de licença, como no estoque: o README diz "todos os direitos
+reservados"; não pôr licença aberta sem perguntar.
 
 ## Próximos passos
 
