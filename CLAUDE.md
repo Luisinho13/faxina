@@ -73,6 +73,14 @@ repositório novo é com o usuário (github.com/new) ou `gh auth login`.
 Sem arquivo de licença, como no estoque: o README diz "todos os direitos
 reservados"; não pôr licença aberta sem perguntar.
 
+## Cópia de uso no PC do usuário
+
+O app pronto fica em **`D:\Faxina`** (cópia do `dist\Faxina`, 14/10), com
+atalho na Área de Trabalho e no Menu Iniciar. É ela que o usuário abre, e o
+agendamento salvo por ela aponta para `D:\Faxina\Faxina.exe`. Recompilar
+**não** atualiza essa cópia: depois de gerar o exe novo, fechar o app e
+copiar `dist\Faxina` por cima de `D:\Faxina`.
+
 ## Próximos passos
 
 - Usuário testar no PC dele (rodar `dist\Faxina\Faxina.exe`).
