@@ -409,6 +409,8 @@ function atualizarAgenda() {
   $("#ag-dia-mes").value = AG.dia_mes;
   $("#ag-hora").value = AG.hora;
   $("#ag-limite").value = AG.limite_gb;
+  const faixa = $("#ag-limite");
+  faixa.style.setProperty("--cheio", ((AG.limite_gb - faixa.min) / (faixa.max - faixa.min) * 100) + "%");
   $("#ag-limite-valor").textContent = NUM1.format(AG.limite_gb).replace(",0", "") + " GB";
   $("#ag-limite").closest(".limite").style.display = AG.modo === "avisar" ? "" : "none";
 

@@ -348,7 +348,21 @@ select:focus, input:focus-visible, button:focus-visible { outline: 2px solid var
 .limite label { font-size: 13px; color: var(--mudo); font-weight: 600; }
 .limite-valor { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
 .limite-valor output { font-weight: 700; min-width: 56px; font-variant-numeric: tabular-nums; }
-input[type=range] { flex: 1; accent-color: var(--acento); }
+input[type=range] {
+  flex: 1; height: 22px; margin: 0; background: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  --cheio: 0%;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 6px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--acento) var(--cheio), var(--borda) var(--cheio));
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; margin-top: -7px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--acento); box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+  transition: transform .15s;
+}
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.12); }
 
 .agenda-rodape { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 6px 0 40px; flex-wrap: wrap; }
 .proxima { margin: 0; color: var(--mudo); }
