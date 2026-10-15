@@ -4,13 +4,15 @@
 
 # Faxina
 
-**Limpeza de disco para Windows, sem susto.**
+**Limpeza de disco para Windows e Android, sem susto.**
 
 Mostra o que dá para apagar, separa o que é cache do que é seu<br>
 e pode passar sozinha uma vez por mês.
 
 ![Windows 10 e 11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows&logoColor=white)
+![Android 8+](https://img.shields.io/badge/Android-8%2B-3DDC84?logo=android&logoColor=white)
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.1-7F52FF?logo=kotlin&logoColor=white)
 ![Status: em testes](https://img.shields.io/badge/status-em%20testes-0f9d84)
 
 <img src="docs/imagens/analise.png" alt="Resultado da análise: 4,7 GB para liberar, separados por grupo" width="820">
@@ -28,6 +30,7 @@ e pode passar sozinha uma vez por mês.
 - [Faxina automática](#faxina-automática)
 - [Telas](#telas)
 - [Instalar e rodar](#instalar-e-rodar)
+- [Versão Android](#versão-android)
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Próximos passos](#próximos-passos)
 
@@ -163,6 +166,85 @@ O app sai em `dist\Faxina\` (cerca de 26 MB). Para usar no dia a dia,
 copie essa pasta para um lugar fixo: o agendamento aponta para o
 caminho do `Faxina.exe`.
 
+## Versão Android
+
+<img src="docs/imagens/android/inicio.png" alt="Tela inicial no celular" width="250">
+<img src="docs/imagens/android/videos.png" alt="Vídeos do WhatsApp, escolhidos um a um" width="250">
+<img src="docs/imagens/android/lixeira.png" alt="Lixeira da Faxina com o botão Devolver" width="250">
+
+No celular, o que enche o armazenamento é outra coisa: vídeos que
+chegam pelo WhatsApp, instaladores e downloads esquecidos, e o cache que
+os apps acumulam. A Faxina para Android olha isso, com a mesma cara e as
+mesmas regras da versão do PC.
+
+> ⚠️ **Pré-lançamento.** O motor tem testes e a tela foi conferida, mas o
+> app ainda não foi usado num celular de verdade.
+
+### O que ela limpa no celular
+
+| Grupo | O quê | Nível |
+|---|---|---|
+| **WhatsApp** | Vídeos recebidos e enviados, escolhidos um a um, com botão para assistir antes | Revisar |
+| | Documentos recebidos (PDFs, planilhas…), um a um | Revisar |
+| | Status já vistos, com mais de um dia | Seguro |
+| **Seus arquivos** | Instaladores `.apk` na pasta Download | Revisar |
+| | O que está na pasta Download há mais de 3 meses | Revisar |
+| **Sistema** | Miniaturas da galeria (ela refaz sozinha) | Seguro |
+| | Lixeira da Faxina | Revisar |
+| **Aplicativos** | Cache de todos os apps, pelo próprio Android, que pergunta antes (Android 11+) | — |
+
+Conversas e backups do WhatsApp nunca entram. Fotos e vídeos da câmera
+também não.
+
+### O que muda em relação ao PC
+
+- **Sem internet.** O app nem tem a permissão de usar a internet: não tem
+  como mandar nada para fora do celular.
+- **Uma lixeira própria.** O Android não tem uma lixeira que sirva para
+  tudo, então a Faxina tem a dela: o que é seu fica 30 dias numa pasta
+  escondida da galeria, com botão **Devolver**, e depois some sozinho.
+  Dá para esvaziar antes, se precisar do espaço já.
+- **O `.nomedia` nunca sai.** É ele que esconde da galeria as pastas
+  privadas; apagá-lo faria fotos escondidas aparecerem.
+- **A faxina automática só avisa.** Toda semana ou todo mês ela olha o
+  celular e manda uma notificação se der para liberar mais que o limite.
+  No celular ela nunca apaga nada sozinha.
+
+| | | |
+|:---:|:---:|:---:|
+| <img src="docs/imagens/android/confirmacao.png" alt="Confirmação antes de mandar para a lixeira" width="250"><br>**Confirmação** | <img src="docs/imagens/android/pronto-escuro.png" alt="Fim da faxina, tema escuro" width="250"><br>**Fim da faxina, tema escuro** | <img src="docs/imagens/android/agenda-escuro.png" alt="Agendamento, tema escuro" width="250"><br>**Agendamento** |
+
+<sub>Telas com dados de exemplo.</sub>
+
+### Instalar no celular
+
+Baixe o `Faxina-0.1.apk` na página do
+[release android-v0.1](https://github.com/Luisinho13/faxina/releases/tag/android-v0.1)
+pelo próprio celular e toque nele. O Android pede para permitir
+"instalar apps desconhecidos"; se o Play Protect avisar, é só tocar em
+*Instalar mesmo assim*. Ao abrir, a Faxina pede o acesso aos arquivos.
+
+Precisa de Android 8 ou mais novo. A limpeza do cache dos apps só aparece
+no Android 11 ou mais novo.
+
+### Compilar
+
+Precisa do JDK 17 e do SDK do Android (plataforma 35). Com o
+`local.properties` apontando para o SDK:
+
+```powershell
+cd android
+.\gradlew.bat testDebugUnitTest   # testes do motor, rodam no PC
+.\gradlew.bat assembleRelease     # sai em app\build\outputs\apk\release
+```
+
+Sem `keystore.properties` (que fica fora do repositório), o APK sai
+assinado com a chave de depuração da máquina.
+
+Para ver a tela sem celular, `android\teste-tela\fotografar.ps1` abre o
+app no Edge, no tamanho de um celular e com dados de exemplo, e tira uma
+foto de cada tela.
+
 ## Estrutura do projeto
 
 ```
@@ -180,6 +262,12 @@ faxina/
 ├── ui/                  a tela: HTML, CSS e JavaScript, sem internet
 ├── recursos/            ícone
 ├── testes/              testes do motor
+├── android/             a versão para celular
+│   ├── app/src/main/
+│   │   ├── java/…/faxina/   motor, lixeira e catálogo (Kotlin), ponte com a tela
+│   │   └── assets/ui/       a tela do celular
+│   ├── app/src/test/        testes do motor
+│   └── teste-tela/          dados de exemplo e fotos da tela no PC
 └── docs/imagens/        prints deste README
 ```
 
@@ -191,6 +279,8 @@ faxina/
 - [ ] Mais launchers de jogo (Ubisoft Connect, EA App, Riot)
 - [ ] Opção de desligar a hibernação (libera o tamanho da memória RAM em
       disco)
+- [ ] Android: primeiro uso num celular de verdade
+- [ ] Android: fotos repetidas e áudios do WhatsApp
 - [ ] Nome definitivo
 
 ---
