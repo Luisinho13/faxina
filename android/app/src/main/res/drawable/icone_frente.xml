@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Os três brilhos do logo (ICONES.logo em ui/icones.js), centrados na área segura. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="2.2"
+        android:scaleY="2.2"
+        android:translateX="27.6"
+        android:translateY="27.6">
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M12,3l1.9,4.6L18.5,9.5l-4.6,1.9L12,16l-1.9,-4.6L5.5,9.5l4.6,-1.9z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M19,15l0.8,1.9 1.9,0.8 -1.9,0.8L19,20.4l-0.8,-1.9 -1.9,-0.8 1.9,-0.8z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M5,16.5l0.6,1.4 1.4,0.6 -1.4,0.6L5,20.5l-0.6,-1.4 -1.4,-0.6 1.4,-0.6z" />
+    </group>
+</vector>

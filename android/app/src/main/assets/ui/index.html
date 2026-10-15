@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Faxina</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<main class="principal">
+  <!-- ======================= LIMPEZA ======================= -->
+  <section class="tela ativa" id="tela-limpeza">
+
+    <div class="estado" id="estado-carregando"></div>
+
+    <div class="estado" id="estado-permissao" hidden>
+      <div class="heroi">
+        <div class="heroi-arte" aria-hidden="true">
+          <div class="bolha b1"></div><div class="bolha b2"></div><div class="bolha b3"></div>
+          <span class="heroi-icone" data-icone="cadeado"></span>
+        </div>
+        <h1>Primeiro, uma permissão</h1>
+        <p class="sub">Para ver o que ocupa espaço, a Faxina precisa olhar os arquivos do celular.</p>
+        <div class="cartao promessas">
+          <div><span class="promessa-icone" data-icone="olho"></span><p><strong>Nada sai sem você ver</strong>Você escolhe cada coisa antes de limpar.</p></div>
+          <div><span class="promessa-icone" data-icone="escudo"></span><p><strong>Sem internet</strong>A Faxina nem tem permissão de usar a internet. Nada sai do celular.</p></div>
+          <div><span class="promessa-icone" data-icone="devolver"></span><p><strong>Dá para desfazer</strong>Vídeos e documentos vão para a lixeira da Faxina e ficam 30 dias lá.</p></div>
+        </div>
+        <button class="botao primario grande" id="pedir-permissao"><span data-icone="cadeado"></span>Dar permissão</button>
+        <p class="dica" id="dica-permissao"></p>
+      </div>
+    </div>
+
+    <div class="estado" id="estado-inicio" hidden>
+      <div class="heroi">
+        <div class="heroi-arte" aria-hidden="true">
+          <div class="bolha b1"></div><div class="bolha b2"></div><div class="bolha b3"></div>
+          <span class="heroi-icone" data-icone="brilho"></span>
+        </div>
+        <h1>Vamos dar uma geral no celular?</h1>
+        <p class="sub">A Faxina olha vídeos do WhatsApp, downloads esquecidos e o que os apps acumulam.
+          Nada sai sem você ver antes.</p>
+        <button class="botao primario grande" id="analisar">
+          <span data-icone="lupa"></span>Analisar agora
+        </button>
+      </div>
+      <div class="cartao espaco" id="espaco"></div>
+      <div class="fatos" id="fatos"></div>
+    </div>
+
+    <div class="estado" id="estado-trabalhando" hidden>
+      <div class="heroi heroi-meio">
+        <div class="anel" id="anel">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="anel-fundo" cx="60" cy="60" r="52"/>
+            <circle class="anel-frente" id="anel-frente" cx="60" cy="60" r="52"/>
+          </svg>
+          <span class="anel-numero" id="anel-numero">0%</span>
+        </div>
+        <h2 id="trabalhando-titulo">Analisando…</h2>
+        <p class="sub" id="trabalhando-detalhe">&nbsp;</p>
+      </div>
+    </div>
+
+    <div class="estado" id="estado-resultado" hidden>
+      <header class="resumo">
+        <div class="resumo-topo">
+          <p class="rotulo">Dá para liberar</p>
+          <button class="botao-icone" id="reanalisar" aria-label="Analisar de novo"><span data-icone="refazer"></span></button>
+        </div>
+        <p class="numero-grande" id="total-encontrado">0 GB</p>
+        <div class="barra-grupos" id="barra-grupos"></div>
+        <div class="legenda" id="legenda"></div>
+      </header>
+      <div id="cache-apps"></div>
+      <div id="grupos"></div>
+      <div class="ja-limpo" id="ja-limpo"></div>
+      <div class="espaco-barra"></div>
+      <footer class="barra-acao">
+        <div>
+          <strong id="selecionado">0 GB</strong>
+          <span id="selecionado-detalhe">selecionados</span>
+        </div>
+        <button class="botao primario" id="limpar"><span data-icone="vassoura"></span>Limpar</button>
+      </footer>
+    </div>
+
+    <div class="estado" id="estado-pronto" hidden>
+      <div class="heroi">
+        <div class="confete" id="confete" aria-hidden="true"></div>
+        <span class="selo-ok" data-icone="ok"></span>
+        <p class="numero-gigante" id="liberado">0 GB</p>
+        <p class="rotulo-gigante" id="liberado-rotulo">liberados</p>
+        <p class="sub" id="pronto-detalhe"></p>
+        <div class="cartao lista-final" id="lista-final"></div>
+        <div class="botoes coluna">
+          <button class="botao primario" id="pronto-esvaziar" hidden><span data-icone="lixeira"></span>Esvaziar a lixeira agora</button>
+          <button class="botao fantasma" id="de-novo"><span data-icone="refazer"></span>Analisar de novo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= LIXEIRA ======================= -->
+  <section class="tela" id="tela-lixeira">
+    <h1 class="titulo-tela">Lixeira</h1>
+    <p class="sub-tela">O que sai nas faxinas fica aqui por 30 dias, escondido da galeria. Depois some sozinho.</p>
+    <div class="cartao lixeira-resumo" id="lixeira-resumo"></div>
+    <div id="lixeira-lista"></div>
+  </section>
+
+  <!-- ======================= AGENDA ======================= -->
+  <section class="tela" id="tela-agenda">
+    <h1 class="titulo-tela">Agendamento</h1>
+    <p class="sub-tela">A Faxina pode olhar o celular sozinha e te chamar quando valer a pena.</p>
+
+    <div class="cartao linha-chave">
+      <div>
+        <strong>Faxina automática</strong>
+        <p class="mudo" id="agenda-status">Desligada</p>
+      </div>
+      <label class="chave">
+        <input type="checkbox" id="ag-ativo" aria-label="Faxina automática">
+        <span></span>
+      </label>
+    </div>
+
+    <div class="agenda-campos" id="agenda-campos">
+      <div class="cartao">
+        <p class="rotulo-campo">Com que frequência</p>
+        <div class="segmentado" id="ag-frequencia">
+          <button data-valor="semanal">Toda semana</button>
+          <button data-valor="mensal">Todo mês</button>
+        </div>
+
+        <div class="limite">
+          <label for="ag-limite">Avisar só se der para liberar pelo menos</label>
+          <div class="limite-valor">
+            <input type="range" id="ag-limite" min="0.5" max="10" step="0.5">
+            <output id="ag-limite-valor">1 GB</output>
+          </div>
+        </div>
+      </div>
+
+      <div class="cartao promessas pequenas">
+        <div><span class="promessa-icone" data-icone="sino"></span><p><strong>Ela só avisa</strong>Manda uma notificação. Você abre, vê e decide o que sai. Sozinha, ela nunca apaga nada.</p></div>
+        <div><span class="promessa-icone" data-icone="celular"></span><p><strong>Na hora em que o celular estiver parado</strong>O Android escolhe o momento, para não gastar bateria.</p></div>
+      </div>
+    </div>
+
+    <p class="proxima" id="ag-proxima"></p>
+    <div class="botoes coluna agenda-botoes">
+      <button class="botao primario" id="ag-salvar"><span data-icone="ok"></span>Salvar</button>
+      <button class="botao fantasma" id="ag-testar"><span data-icone="sino"></span>Testar a notificação</button>
+    </div>
+  </section>
+
+  <!-- ======================= HISTÓRICO ======================= -->
+  <section class="tela" id="tela-historico">
+    <h1 class="titulo-tela">Histórico</h1>
+    <p class="sub-tela">Tudo o que a Faxina já liberou neste celular.</p>
+    <div class="numeros" id="hist-numeros"></div>
+    <div class="cartao" id="hist-lista"></div>
+  </section>
+</main>
+
+<nav class="abas">
+  <button class="aba ativo" data-tela="limpeza"><span data-icone="vassoura"></span>Limpeza</button>
+  <button class="aba" data-tela="lixeira"><span data-icone="lixeira"></span>Lixeira</button>
+  <button class="aba" data-tela="agenda"><span data-icone="calendario"></span>Agenda</button>
+  <button class="aba" data-tela="historico"><span data-icone="historico"></span>Histórico</button>
+</nav>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <h2 id="modal-titulo">Antes de limpar</h2>
+    <div id="modal-corpo"></div>
+    <div class="botoes">
+      <button class="botao fantasma" id="modal-cancelar">Voltar</button>
+      <button class="botao primario" id="modal-ok">Pode limpar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="icones.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

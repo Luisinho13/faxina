@@ -81,6 +81,36 @@ agendamento salvo por ela aponta para `D:\Faxina\Faxina.exe`. Recompilar
 **não** atualiza essa cópia: depois de gerar o exe novo, fechar o app e
 copiar `dist\Faxina` por cima de `D:\Faxina`.
 
+## Versão Android (`android/`, 14/10/2026)
+
+Pedido do usuário para usar no celular **Android da mãe dele** (ele tem
+iPhone; iOS ficou de fora: não deixa mexer em arquivo de outro app).
+Instalação direta por `.apk`, sem Play Store.
+
+- Mesma arquitetura: tela em HTML/CSS/JS (`app/src/main/assets/ui`) numa
+  WebView; `Ponte.kt` faz o papel do js_api (chamada assíncrona com número,
+  resposta por `Nativo_resposta`). Motor em Kotlin puro (`Motor.kt`,
+  `Categorias.kt`, `Lixeira.kt`) com as mesmas regras de segurança;
+  `MotorTest.kt` (17 testes) roda no PC com `gradlew testDebugUnitTest`.
+- **Sem permissão de INTERNET**, de propósito (e dito na tela).
+- Categorias: vídeos e documentos do WhatsApp, status vistos, `.apk`,
+  downloads com mais de 3 meses, miniaturas da galeria, lixeira da Faxina.
+  O cache dos apps é o `ACTION_CLEAR_APP_CACHE` do Android 11+ (ele pergunta;
+  medimos o espaço antes/depois).
+- Arquivo da pessoa vai para `/.faxina-lixeira` (com `.nomedia`), 30 dias,
+  com "Devolver". O `.nomedia` nunca sai.
+- Agenda: JobScheduler a cada 12 h; o `Vigia` decide se passou a
+  semana/mês. **Só avisa, nunca apaga sozinho** no celular.
+- Ferramentas em **`D:\Android`** (JDK 17, SDK, Gradle; `C:` tem pouco
+  espaço): `JAVA_HOME=D:\Android\jdk17`, `GRADLE_USER_HOME=D:\Android\gradle-home`.
+- **Chave de assinatura** em `D:\Android\chaves` (`faxina.jks` +
+  `keystore.properties`, cópia em `android/keystore.properties`, fora do
+  git). Perder a chave = não dá para atualizar o app instalado.
+- APK pronto: `D:\Faxina-celular\Faxina-0.1.apk`.
+- Sem emulador: o i5-9400F tem VT-x desligado na BIOS. A tela se testa
+  com `android/teste-tela/fotografar.ps1` (Edge sem janela + `mock.js`).
+  **Nunca rodou num celular de verdade ainda.**
+
 ## Próximos passos
 
 - Usuário testar no PC dele (rodar `dist\Faxina\Faxina.exe`).
